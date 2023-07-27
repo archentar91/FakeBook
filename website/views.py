@@ -1,6 +1,7 @@
 from django.shortcuts import redirect, render
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
+
 # Create your views here.
 
 def home(request):
@@ -21,4 +22,6 @@ def home(request):
         return render(request, 'home.html', {})
 
 def logout_user(request):
-    pass
+    logout(request)
+    messages.success(request, 'You are now logged out')
+    return redirect('home')
