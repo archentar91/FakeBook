@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="col-md-6 offset-md-3">
+  <div class="alert alert-success" role="alert">
+      <h4 class="alert-heading">Welcome {{ user.username }}! You can add record here:</h4>
+  </div></br>
+
+<form method="POST" action="{% url 'add_record' %}">
+	{% csrf_token %}
+
+	{{ form.as_p }}
+
+<br/>
+<button type="submit" class="btn btn-primary" onclick="return confirmPrompt()">Add</button>
+   <a href="{% url 'home' %}" class="btn btn-secondary">Back</a>
+
+</form>
+
+</div></br>
+
+<script>
+  function confirmPrompt() {
+    return confirm("Are you sure you want to add this record?");
+  }
+  </script>
+
+{% endblock %}
