@@ -12,7 +12,7 @@ def connect_to_database():
             user = "postgres",
             password = "113265",
             host = "localhost",
-            database = "mydb",
+            database = "db2",
             port = "5432"
         )
         return connection

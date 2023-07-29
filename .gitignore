@@ -1,0 +1,7 @@
+mydb.py
+.vscode/
+.idea/
+myfolder/
+virt/
+website/__pycache__/
+website/migrations/

@@ -1,5 +1,4 @@
 from django.db import models
-from django_countries.fields import CountryField
 
 # Create your models here.
 class Record(models.Model):
@@ -9,7 +8,7 @@ class Record(models.Model):
     last_name = models.CharField(max_length=100)
     email = models.CharField(max_length=100)
     phone = models.CharField(max_length=50)
-    country = CountryField()
+    country = models.CharField(max_length=50)
     city = models.CharField(max_length=100)
     address = models.CharField(max_length=100)
     state = models.CharField(max_length=50)
