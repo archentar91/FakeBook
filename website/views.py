@@ -1,8 +1,10 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
+from django.http import JsonResponse
 from .forms import SignUpForm, AddRecordForm
 from .models import Record
+
 
 # Create your views here.
 
@@ -33,8 +35,7 @@ def register_user(request):
     if request.method == 'POST':
         form = SignUpForm(request.POST)
         if form.is_valid():
-            form.save()
-            # Authenticate and login the user
+            user = form.save()
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=password)
@@ -43,8 +44,16 @@ def register_user(request):
             return redirect('home')
     else:
         form = SignUpForm()
-        return render(request, 'register.html', {'form': form})
+
     return render(request, 'register.html', {'form': form})
+
+def register_check_password(request):
+    if request.method == "POST":
+        data = request.POST
+        password = data.get("password", "")
+        is_valid_password = True  # Replace this with your password authentication logic
+        return JsonResponse({"valid": is_valid_password})
+    return JsonResponse({"valid": False})  # Return False if the request method is not POST
 
 def customer_record(request, pk):
     if request.user.is_authenticated:
