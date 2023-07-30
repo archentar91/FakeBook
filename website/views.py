@@ -7,8 +7,7 @@ from .models import Record
 # Create your views here.
 
 def home(request):
-    records = Record.objects.all()
-    
+    records = Record.objects.all()  
     # Check if the user is logged in
     if request.method == 'POST':
         username = request.POST['username']
@@ -79,7 +78,7 @@ def add_record(request):
 		messages.success(request, "You Must Be Logged In.")
 		return redirect('home')
 
-def edit_record(request, pk):
+def update_record(request, pk):
     if request.user.is_authenticated:
         current_record = Record.objects.get(id=pk)
         form = AddRecordForm(request.POST or None, instance=current_record)
@@ -88,7 +87,7 @@ def edit_record(request, pk):
                 form.save()
                 messages.success(request, "Record Updated.")
             return redirect('home')
-        return render(request, 'edit_record.html', {'form':form})
+        return render(request, 'update_record.html', {'form':form})
     else:
-        messages.success(request, "You Must Be Logged In.")
+        messages.success(request, "You must be logged in.")
         return redirect('home')

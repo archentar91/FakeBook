@@ -79,11 +79,11 @@ WSGI_APPLICATION = 'FakeBook.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'mydb',
+        'NAME': 'mydatabase',
         'USER': 'postgres',
         'PASSWORD': '113265',
         'HOST': 'localhost',
-        'PORT': '',
+        'PORT': '5432',
     }
 }
 

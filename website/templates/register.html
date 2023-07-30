@@ -1,11 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="col-md-6 offset-md-3"></br>
-    <div class="alert alert-danger" role="alert">
-        <h4 class="alert-heading">You are not registered!</h4>
-        <p>Please fill up the form.</p>
-        </div></br>
-    </br>
         <form method="POST" action="">
             {% csrf_token %}
             {% if form.errors %}
@@ -20,7 +15,6 @@
                 </div>
             {% endif %}
         {{ form.as_p }}
-        </br>
         <button type="submit" class="btn btn-primary">Register</button>
         <form>
     </div>
