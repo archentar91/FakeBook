@@ -1,25 +1,12 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block content %}
-
-<div class="col-md-6 offset-md-3"></br>
-  <h4>Update Record:</h4>
+ <h4>Update Record:</h4>
 
     <form method="POST">
       {% csrf_token %}
 
       {{ form.as_p }}
 
-      <button type="submit" class="btn btn-primary" onclick="return confirmPrompt()">Update</button>
-      <a href="{% url 'home' %}" class="btn btn-secondary">Back</a>
-      
-    </form>
-
-</div></br>
-
-<script>
-  function confirmPrompt() {
-    return confirm("Are you sure you want to update this record?");
-  }
-</script>
-
+      <button type="button" class="btn btn-primary" onclick="showConfirmModal('update', 'Nazwa rekordu')">Aktualizuj rekord</button>
 {% endblock %}

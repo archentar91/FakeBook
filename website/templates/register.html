@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block content %}
-<div class="col-md-6 offset-md-3"></br>
     <form method="POST" action="">
         {% csrf_token %}
         {% if form.errors %}
@@ -28,90 +28,4 @@
 
         <button type="submit" class="btn btn-primary mt-3" value="Register" id="register-btn" disabled>Register</button>
     </form>
-</div>
-</br>
-
-<!-- Include the following script at the bottom of the template -->
-<script>
-    const passwordInput = document.getElementById("id_password1");
-    const confirmPasswordInput = document.getElementById("id_password2");
-    const passwordMismatchMsg = document.getElementById("password-mismatch-msg");
-    const passwordStrengthMsg = document.getElementById("password-strength-msg");
-    const registerButton = document.getElementById("register-btn");
-
-    // Function to check if the password meets the minimum length requirement (e.g., 8 characters)
-    function isPasswordValid(password) {
-        return password.length >= 8;
-    }
-
-    function updateRegisterButtonState() {
-        if (passwordInput.value === confirmPasswordInput.value && isPasswordValid(passwordInput.value)) {
-            registerButton.disabled = false;
-        } else {
-            registerButton.disabled = true;
-        }
-    }
-
-    function updatePasswordValidity() {
-        const password = passwordInput.value;
-        const confirmPassword = confirmPasswordInput.value;
-        const isValidPassword = isPasswordValid(password);
-
-        // Password Strength Feedback
-        if (isValidPassword) {
-            passwordStrengthMsg.textContent = "Strong password";
-            passwordStrengthMsg.style.color = "#4CAF50"; // Green
-        } else {
-            passwordStrengthMsg.textContent = "Password should be at least 8 characters";
-            passwordStrengthMsg.style.color = "#FF5722"; // Red
-        }
-
-        // Password Mismatch Feedback
-        if (password === confirmPassword) {
-            passwordInput.style.backgroundColor = isValidPassword ? "#E8F5E9" : "#FFEBEE"; // Light Green / Light Red
-            confirmPasswordInput.style.backgroundColor = isValidPassword ? "#E8F5E9" : "#FFEBEE"; // Light Green / Light Red
-            passwordMismatchMsg.textContent = "";
-        } else {
-            passwordInput.style.backgroundColor = "#FFEBEE"; // Light Red
-            confirmPasswordInput.style.backgroundColor = "#FFEBEE"; // Light Red
-            passwordMismatchMsg.textContent = "Passwords do not match!";
-        }
-
-        updateRegisterButtonState();
-    }
-
-    confirmPasswordInput.addEventListener("input", updatePasswordValidity);
-    passwordInput.addEventListener("input", updatePasswordValidity);
-
-    // Call the function on page load to initialize the button state
-    updatePasswordValidity();
-
-    // Real-time Password Authentication
-    passwordInput.addEventListener("input", () => {
-        const password = passwordInput.value;
-        fetch("/api/register_check_password/", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "X-CSRFToken": "{{ csrf_token }}", // Replace with your CSRF token
-            },
-            body: JSON.stringify({ password: password }),
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.valid) {
-                // Password is valid, perform desired actions (e.g., change input color)
-                passwordInput.style.borderColor = "#00000"; // Green
-            } else {
-                // Password is invalid, perform desired actions (e.g., change input color)
-                passwordInput.style.borderColor = "#00000"; // Red
-            }
-        })
-        .catch(error => {
-            console.error("Error:", error);
-            // Handle error appropriately
-        });
-    });
-</script>
-
 {% endblock %}

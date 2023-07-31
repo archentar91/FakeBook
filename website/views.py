@@ -1,30 +1,62 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.http import JsonResponse
-from .forms import SignUpForm, AddRecordForm
+from .forms import SignUpForm, AddRecordForm, UserChangeForm, ChangePasswordForm, LoginForm, UpdateProfileForm
 from .models import Record
 
 
-# Create your views here.
-
 def home(request):
-    records = Record.objects.all()  
-    # Check if the user is logged in
+    records = Record.objects.all()
+    
     if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
-        # Authenticate the user
-        user = authenticate(request, username=username, password=password)
-        if user is not None:
-            login(request, user)
-            messages.success(request, 'You are now logged in')
-            return redirect('home')
-        else:
-            messages.error(request, 'Invalid username or password')
+        login_form = LoginForm(request.POST)
+        if login_form.is_valid():
+            username = login_form.cleaned_data['username']
+            password = login_form.cleaned_data['password']
+            # Authenticate
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request, user)
+                messages.success(request, "You have been logged in!")
+            else:
+                messages.error(request, "Invalid username or password. Please try again.")
+        
+        # Redirect to the home page (to avoid form resubmission)
+        return redirect('home')
+    
+    else:
+        login_form = LoginForm()
+
+    return render(request, 'home.html', {'records': records, 'login_form': login_form})
+
+@login_required
+def my_account_user(request):
+    if request.method == 'POST':
+        form = UpdateProfileForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Profile updated successfully.')
+            return redirect('my_account')
+    else:
+        form = UpdateProfileForm(instance=request.user)
+
+    return render(request, 'my_account.html', {'form': form})
+
+@login_required
+def change_password_user(request):
+    if request.method == 'POST':
+        form = ChangePasswordForm(user=request.user, data=request.POST)
+        if form.is_valid():
+            form.save()
+            logout(request)
+            messages.success(request, 'Password changed successfully!')
             return redirect('home')
     else:
-        return render(request, 'home.html', {'records': records})
+        form = ChangePasswordForm(user=request.user)
+        messages.error(request, 'Please fill in all the fields.')
+    return render(request, 'change_password.html', {'form': form})
 
 def logout_user(request):
     logout(request)

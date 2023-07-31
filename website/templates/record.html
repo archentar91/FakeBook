@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block content %}
-
-<div class="col-md-6 offset-md-3"></br>
     <div class="card">
         <div class="card-header"><strong>{{ customer_record.first_name }} {{ customer_record.last_name }}</strong>
     </div>
@@ -35,7 +34,6 @@
 
 <a href="{% url 'update_record' customer_record.id %}" class="btn btn-primary">Edit</a>
 
-</div></br>
 
 <script>
     function confirmDelete() {

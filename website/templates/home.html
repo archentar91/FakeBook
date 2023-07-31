@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block content %}
-</br>
-<div class="col-md-6 offset-md-3"></br>
     {% if user.is_authenticated %}
       <table class="table table-striped table-hover table-bordered">
         <thead class="table-dark">
@@ -41,20 +40,11 @@
       </table>
     </table>
     {% else %}
-    <div class="alert alert-danger" role="alert">
-        <h4 class="alert-heading">Login</h4>
-    </div></br>
     <form method="POST" action="{% url 'home' %}">
     {% csrf_token %}
+    {{ login_form.as_p }}
     <form>
-        <div class="mb-3">
-          <input type="text" class="form-control" name="username", placeholder="Username" required>
-        </div></br>
-        <div class="mb-3">
-          <input type="password" class="form-control" name="password", placeholder="Password" required>
-        </div></br>
         <button type="submit" class="btn btn-primary">Login</button>
     </form>
-</div></br>
 {% endif %}
 {% endblock %}
