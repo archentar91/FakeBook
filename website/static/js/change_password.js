@@ -1,9 +1,9 @@
 
-const passwordInput = document.getElementById("id_password1");
-const confirmPasswordInput = document.getElementById("id_password2");
+const passwordInput = document.getElementById("id_new_password1");
+const confirmPasswordInput = document.getElementById("id_new_password2");
 const passwordMismatchMsg = document.getElementById("password-mismatch-msg");
 const passwordStrengthMsg = document.getElementById("password-strength-msg");
-const registerButton = document.getElementById("register-btn");
+const changePassButton = document.getElementById("changePass-btn");
 
 // Function to check if the password meets the minimum length requirement (e.g., 8 characters)
 function isPasswordValid(password) {
@@ -25,11 +25,11 @@ function hasStrongStrength(password) {
     return hasLetters && hasNumbers && hasSpecialChars;
 }
 
-function updateRegisterButtonState() {
+function updateChangePasswordButtonState() {
     if (passwordInput.value === confirmPasswordInput.value && isPasswordValid(passwordInput.value)) {
-        registerButton.disabled = false;
+        changePassButton.disabled = false;
     } else {
-        registerButton.disabled = true;
+        changePassButton.disabled = true;
     }
 }
 
@@ -74,7 +74,7 @@ function updatePasswordValidity() {
         }
     }
 
-    updateRegisterButtonState();
+    updateChangePasswordButtonState();
 }
 
 function updateConfirmPassword() {

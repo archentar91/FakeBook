@@ -30,15 +30,32 @@
 
 <a href="{% url 'home' %}" class="btn btn-secondary">Back</a>
 
-<a href="{% url 'delete_record' customer_record.id %}" class="btn btn-danger" onclick="return confirmDelete()">Delete</a>
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#DeleteRecord">Delete</button>
 
 <a href="{% url 'update_record' customer_record.id %}" class="btn btn-primary">Edit</a>
 
 
-<script>
-    function confirmDelete() {
-    return confirm("Are you sure you want to delete this record?");
-    }
-</script>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="DeleteRecord" tabindex="-1" role="dialog" aria-labelledby="DeleteRecordTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="DeleteRecordLongTitle">Delete</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Do you really want delete this record?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-danger">Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
 {% endblock %}

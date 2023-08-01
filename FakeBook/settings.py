@@ -18,7 +18,7 @@ from pathlib import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-# Ustawienia plików statycznych
+# Settings for development
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'website/static'),

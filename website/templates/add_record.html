@@ -8,16 +8,28 @@
       {% csrf_token %}
 
       {{ form.as_p }}
-
-      <button type="submit" class="btn btn-primary" onclick="return confirmPrompt()">Add</button>
-      <a href="{% url 'home' %}" class="btn btn-secondary">Back</a>
-
-    </form>
-
-<script>
-  function confirmPrompt() {
-    return confirm("Are you sure you want to add this record?");
-  }
-</script>
-
+    <!-- Modal -->
+    <div class="modal fade" id="AddRecord" tabindex="-1" role="dialog" aria-labelledby="AddRecordTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="AddRecordLongTitle">Add Record</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            Do you really want add this record?
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+<a href="{% url 'home' %}" class="btn btn-secondary">Back</a>
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#AddRecord">Add</button>
 {% endblock %}

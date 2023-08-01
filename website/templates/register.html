@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
+<h4>Register:</h4>
     <form method="POST" action="">
         {% csrf_token %}
         {% if form.errors %}
@@ -17,15 +18,15 @@
         {{ form.as_p }}
 
         <!-- Password Strength Feedback and Password Mismatch Feedback -->
-        <div class="row">
+        <div class="linebreaks">
             <div class="col">
-                <div id="password-strength-msg" class="text"></div>
+                <div id="password-strength-msg" class="text" style="height: 20px;"></div>
             </div>
             <div class="col">
-                <div id="password-mismatch-msg" class="text-danger text"></div>
+                <div id="password-mismatch-msg" class="text-danger text" style="height: 20px;"></div>
             </div>
         </div>
-
         <button type="submit" class="btn btn-primary mt-3" value="Register" id="register-btn" disabled>Register</button>
     </form>
+    <script src="{% static 'js/password.js' %}"></script>
 {% endblock %}
