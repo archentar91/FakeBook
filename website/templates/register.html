@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load widget_tweaks %}
 {% load static %}
 {% block content %}
 <h4>Register:</h4>
@@ -15,7 +16,15 @@
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         {% endif %}
-        {{ form.as_p }}
+
+        <!-- Render each form field with floating labels -->
+        {% for field in form %}
+        <div class="form-floating mb-3">
+            {% render_field field class="form-control" %}
+            <label for="{{ field.auto_id }}">{{ field.label }}</label>
+            {{ field.help_text | safe }} <!-- Use the safe filter here -->
+        </div>
+        {% endfor %}
 
         <!-- Password Strength Feedback and Password Mismatch Feedback -->
         <div class="linebreaks">

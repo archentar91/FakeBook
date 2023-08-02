@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load widget_tweaks %}
 {% load static %}
 {% block content %}
 
@@ -6,8 +7,13 @@
 
     <form method="POST" action="{% url 'add_record' %}">
       {% csrf_token %}
-
-      {{ form.as_p }}
+      {% for field in form %}
+      <div class="form-floating mb-3">
+          {% render_field field class="form-control" %}
+          <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+          {{ field.help_text | safe }} <!-- Use the safe filter here -->
+      </div>
+      {% endfor %}
     <!-- Modal -->
     <div class="modal fade" id="AddRecord" tabindex="-1" role="dialog" aria-labelledby="AddRecordTitle" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">

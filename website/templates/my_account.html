@@ -1,12 +1,18 @@
 {% extends 'base.html' %}
+{% load widget_tweaks %}
 {% load static %}
 {% block content %}
     <h4>Update Profile:</h4>
 
     <form method="POST" action="{% url 'my_account' %}">
         {% csrf_token %}
-        {{ form.as_p }}
-
+        {% for field in form %}
+        <div class="form-floating mb-3">
+            {% render_field field class="form-control" %}
+            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+            {{ field.help_text | safe }} <!-- Use the safe filter here -->
+        </div>
+        {% endfor %}
     <a href="{% url 'home' %}" class="btn btn-secondary">Back</a>
 
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">Update</button>

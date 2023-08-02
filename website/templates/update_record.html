@@ -1,10 +1,17 @@
 {% extends 'base.html' %}
+{% load widget_tweaks %}
 {% load static %}
 {% block content %}
 <h4>Update Record:</h4>
   <form method="POST">
         {% csrf_token %}
-        {{ form.as_p }}
+        {% for field in form %}
+        <div class="form-floating mb-3">
+            {% render_field field class="form-control" %}
+            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+            {{ field.help_text | safe }} <!-- Use the safe filter here -->
+        </div>
+        {% endfor %}
     <!-- Modal -->
     <div class="modal fade" id="UpdateRecord" tabindex="-1" role="dialog" aria-labelledby="UpdateRecordTitle" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">
