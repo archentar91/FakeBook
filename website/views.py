@@ -32,17 +32,17 @@ def home(request):
     return render(request, 'home.html', {'records': records, 'login_form': login_form})
 
 @login_required
-def my_account_user(request):
+def profile_user(request):
     if request.method == 'POST':
         form = UpdateProfileForm(request.POST, instance=request.user)
         if form.is_valid():
             form.save()
             messages.success(request, 'Profile updated successfully.')
-            return redirect('my_account')
+            return redirect('profile')
     else:
         form = UpdateProfileForm(instance=request.user)
 
-    return render(request, 'my_account.html', {'form': form})
+    return render(request, 'user/profile.html', {'form': form})
 
 @login_required
 def change_password_user(request):
@@ -56,7 +56,7 @@ def change_password_user(request):
     else:
         form = ChangePasswordForm(user=request.user)
         messages.error(request, 'Please fill in all the fields.')
-    return render(request, 'change_password.html', {'form': form})
+    return render(request, 'user/change_password.html', {'form': form})
 
 def logout_user(request):
     logout(request)

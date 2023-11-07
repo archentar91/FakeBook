@@ -1,20 +1,23 @@
 # Install Mysql on your system
+#pip install psycopg2
 
-import mysql.connector
-from mysql.connector import Error
+
+import psycopg2
+from psycopg2 import Error
 
 def connect_to_database():
     try:
-        # MySQL credentials
-        connection = mysql.connector.connect(
-            host="localhost",
-            user="root",
-            password="113265",
-            database="mydatabase"
+        # PostgreSQL credentials
+        connection = psycopg2.connect(
+            user = "postgres",
+            password = "113265",
+            host = "localhost",
+            database = "mydatabase",
+            port = "5432"
         )
         return connection
-    except Error as error:
-        print("Error while connecting to MySQL:", error)
+    except (Exception, Error) as error:
+        print("Error while connecting to PostgreSQL:", error)
         return None
 
 def close_connection(connection):
@@ -22,7 +25,7 @@ def close_connection(connection):
         connection.close()
 
 def main():
-    # Connecting to the MySQL database
+    # Connecting to the PostgreSQL database
     connection = connect_to_database()
 
     if connection:
@@ -36,10 +39,10 @@ def main():
             # Fetch the query result
             result = cursor.fetchone()
 
-            print("MySQL database version:")
+            print("PostgreSQL database version:")
             print(result)
 
-        except Error as error:
+        except (Exception, Error) as error:
             print("Error while executing query:", error)
 
         finally:

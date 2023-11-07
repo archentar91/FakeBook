@@ -52,7 +52,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-danger">Delete</button>
+          <a href="{% url 'delete_record' customer_record.id %}" class="btn btn-danger">Delete</a>
         </div>
       </div>
     </div>
